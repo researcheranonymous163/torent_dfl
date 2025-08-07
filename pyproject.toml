@@ -1,0 +1,25 @@
+[build-system]
+requires = ['hatchling']
+build-backend = 'hatchling.build'
+
+[project]
+name = 'dfl'
+version = '0.0.0'
+requires-python = '>=3.12'
+dependencies = [
+	'scikit-learn~=1.5',
+	'grpcio~=1.68',
+	'protobuf~=5.29',
+	'aiofiles~=24.1',
+	'frozendict~=2.4',
+	'codetiming~=1.4'
+]
+
+[project.optional-dependencies]
+torch = ['torch~=2.4']
+torrent = ['torrentfile~=0.9', 'qbittorrent-api~=2024.10', 'pyben~=0.3']
+nats = ['nats-py~=2.9']
+all = ['dfl[torch]', 'dfl[torrent]', 'dfl[nats]']
+
+[tool.hatch.build.targets.sdist]
+exclude = ['apps']
