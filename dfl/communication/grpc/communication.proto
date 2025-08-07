@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+message Message {
+  optional Header header = 1;
+  optional bytes body = 2; // FIXME: this defaults to `b''` and not `None`; checkout for relying usages.
+}
+
+message Header {
+  string json_string = 1;
+}
+
+message Subscribe {
+  Header header = 1;
+
+  bool wait_publish = 2;
+  bool meta_only = 3;
+}
+
+message Receive {
+  optional Header header = 1;
+
+  bool meta_only = 2;
+}
+
+service Communicator {
+  rpc Handle(Message) returns (google.protobuf.Empty);
+
+  rpc HandleSubscribe(Subscribe) returns (Message);
+  rpc HandleReceive(Receive) returns (Message);
+}
